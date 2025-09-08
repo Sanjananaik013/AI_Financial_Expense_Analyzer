@@ -42,26 +42,56 @@ Google Gemini API – AI transaction categorization & Q&A
 
 File Upload & Preprocessing
 
-  CSVs are read directly.
-  PDFs are parsed via pdfplumber → cleaned into a DataFrame.
+        Upload a CSV or PDF bank statement.
+
+        CSVs are read directly using pandas.
+
+        PDFs are parsed via pdfplumber → cleaned into a DataFrame using pdfpreprocessing.py.
 
 Data Standardization
 
-  Detects date, amount, deposits, withdrawals, description, and type columns.
-  Normalizes amounts, handles credits/debits.
+        Detects key columns: date, amount, deposits, withdrawals, description, transaction type.
+
+        Normalizes amounts (removes currency symbols, handles CR/DR).
+
+        Handles income vs. expenses automatically.
 
 Transaction Categorization
 
-  Rule-based categorization (keywords like salary, fuel, shopping).
-  If confidence < 0.5 → fallback to Gemini model.
+        Rule-based categorization (e.g., keywords: salary, fuel, shopping, grocery).
+
+        If confidence score is low → fallback to Gemini AI model for categorization.
+
+        Each transaction is tagged with a category + confidence score.
 
 Analytics & Dashboard
 
-  Rollups of income, expenses, and savings.
-  Spending breakdown by category & type.
+        Monthly rollups: income, expenses, net savings.
 
-RAG Question Answering
-  Ask natural-language questions like:
-    “What was my top spending category in July 2024?”
-    “How much did I save last month?”
-    “Which transaction type had the highest spend?”
+        Spending breakdown: by category & by transaction type.
+
+        Trend charts: monthly income vs. expense.
+
+        Stacked bar charts: monthly spend by category.
+
+RAG-based Question Answering
+
+        Ask natural language questions like:
+
+            “What was my top spending category in July 2024?”
+
+            “How much did I save last month?”
+
+            “Which transaction type had the highest spend?”
+
+            Answers are generated using transaction summaries + Gemini AI.
+
+Insights & Alerts
+
+        📈 Compare spending with the previous month.
+
+        💡 Identify highest spending category each month.
+
+        💾 Show savings rate as a percentage.
+
+        🚨 Subscription spending alerts.
